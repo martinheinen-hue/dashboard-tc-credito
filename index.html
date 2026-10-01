@@ -36,7 +36,7 @@ header small{font-size:.8rem;opacity:.8}
 <body>
 <header>
   <div><h1>📊 Dashboard — Tarjeta de Crédito MercadoPago</h1></div>
-  <small>Datos: 2025-09 – 2026-08 &nbsp;|&nbsp; Actualizado: 30/09/2026 16:08 UTC</small>
+  <small>Datos: 2025-10 – 2026-09 &nbsp;|&nbsp; Actualizado: 01/10/2026 16:46 UTC</small>
 </header>
 <div class="filters">
   <div class="fg"><label>País</label>
@@ -46,8 +46,8 @@ header small{font-size:.8rem;opacity:.8}
       <label><input type="checkbox" value="MLM" checked> 🇲🇽 México</label>
     </div>
   </div>
-  <div class="fg"><label>Desde</label><input type="month" id="fd" value="2025-09"></div>
-  <div class="fg"><label>Hasta</label><input type="month" id="fh" value="2026-08"></div>
+  <div class="fg"><label>Desde</label><input type="month" id="fd" value="2025-10"></div>
+  <div class="fg"><label>Hasta</label><input type="month" id="fh" value="2026-09"></div>
   <div class="fg"><label>Producto</label>
     <select id="fprod">
       <option value="all">Todos los productos</option>
@@ -129,7 +129,7 @@ function c3(f){kill('c3');const rows=RAW.q3.filter(r=>f.pais.includes(r.SIT_SITE
 function c4(f){kill('c4');const rows=filterRows(RAW.q4,f,'mes','SIT_SITE_ID','producto_nombre');const ms=meses(rows);const prods=[...new Set(rows.map(r=>r.producto_nombre))].sort();const bm={};rows.forEach(r=>{const m=String(r.mes).slice(0,7);if(!bm[m])bm[m]={};bm[m][r.producto_nombre]=(bm[m][r.producto_nombre]||[]);bm[m][r.producto_nombre].push(r.tpv_promedio_usd||0);});charts['c4']=new Chart(document.getElementById('c4'),{type:'bar',data:{labels:ms,datasets:prods.map((p,i)=>{return{label:p,data:ms.map(m=>{const v=bm[m]?.[p];return v?+(v.reduce((s,x)=>s+x,0)/v.length).toFixed(2):null;}),backgroundColor:C.prod[i%C.prod.length]};})},options:baseOpts(false,true)});}
 function c5(f){kill('c5');const rows=filterRows(RAW.q5,f,'mes','SIT_SITE_ID');const ms=meses(rows);const ps=f.pais;const bm={};rows.forEach(r=>{const m=String(r.mes).slice(0,7);if(!bm[m])bm[m]={};bm[m][r.SIT_SITE_ID]=r.adopcion_pct;});charts['c5']=new Chart(document.getElementById('c5'),{type:'line',data:{labels:ms,datasets:ps.map(p=>{return{label:p,data:ms.map(m=>bm[m]?.[p]??null),borderColor:C[p]?.m||'#aaa',backgroundColor:(C[p]?.m||'#aaa')+'22',fill:false,tension:.35,pointRadius:4,borderWidth:2.5};})},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:11},boxWidth:12}},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(1)}%`}}},scales:{y:{grid:{color:'#f0f4f8'},ticks:{callback:v=>v+'%',font:{size:10}}},x:{grid:{color:'#f0f4f8'},ticks:{font:{size:10}}}}}});}
 function renderAll(){const f=gf();kpis(f);c1(f);c2(f);c3(f);c4(f);c5(f);}
-function reset(){document.querySelectorAll('#fp input').forEach(i=>i.checked=true);document.getElementById('fd').value='2025-09';document.getElementById('fh').value='2026-08';document.getElementById('fprod').value='all';document.getElementById('ftt').value='all';renderAll();}
+function reset(){document.querySelectorAll('#fp input').forEach(i=>i.checked=true);document.getElementById('fd').value='2025-10';document.getElementById('fh').value='2026-09';document.getElementById('fprod').value='all';document.getElementById('ftt').value='all';renderAll();}
 document.querySelectorAll('.filters input,.filters select').forEach(el=>el.addEventListener('change',renderAll));
 renderAll();
 </script>
